@@ -5,7 +5,7 @@ require_once "src/OST.php";
 
 class seeder
 {
-    public function generateData() {
+    public function generateData(): array {
         $osts = [];
         for ($i = 1; $i <= 3; $i++) {
             $ost = new OST($i, "OST $i", "Video Game $i", 2022);
@@ -17,5 +17,4 @@ class seeder
         }
         return $osts;
     }
-
 }

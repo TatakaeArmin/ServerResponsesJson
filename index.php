@@ -4,7 +4,7 @@ require_once "src/seeder.php";
 require_once "src/song.php";
 require_once "src/OST.php";
 
-$seeder = new Seeder();
+$seeder = new seeder();
 $data = $seeder->generateData();
 
 
@@ -15,8 +15,13 @@ if (isset($_GET['ost_id']) && $_GET['ost_id'] > 0 && $_GET['ost_id'] <= count($d
     exit;
 }
 
+if (isset($_GET['ost_id']) && ($_GET['ost_id'] < 0 || $_GET['ost_id'] >= count($data))) {
+    header('Content-Type: application/json');
+    echo json_encode('Oh Oh die OST gibt es nicht!');
+}
 
-if (isset($_GET['all']) && $_GET['all'] === 'true') {
+
+if (isset($_GET['all']) || !isset($_GET['ost_id'])) {
     header('Content-Type: application/json');
     echo json_encode($data);
     exit;
@@ -24,6 +29,8 @@ if (isset($_GET['all']) && $_GET['all'] === 'true') {
 
 
 
+
+/*
 foreach ($data as $ost) {
     echo "OST Name: {$ost->name}<br>";
     echo "Video Game Name: {$ost->videoGameName}<br>";

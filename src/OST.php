@@ -1,14 +1,15 @@
 <?php
 
+
 require_once "src/song.php";
 
-class OST
+class OST implements JsonSerializable
 {
-    public $id;
-    public $name;
-    public $videoGameName;
-    public $releaseYear;
-    public $trackList = [];
+    private int $id;
+    private string $name;
+    private string $videoGameName;
+    private int $releaseYear;
+    private array $trackList = [];
 
     public function __construct($id, $name, $videoGameName, $releaseYear) {
         $this->id = $id;
@@ -17,7 +18,20 @@ class OST
         $this->releaseYear = $releaseYear;
     }
 
-    public function addSong($song) {
+    public function addSong($song)
+    {
         $this->trackList[] = $song;
     }
+
+    public function jsonSerialize(): array
+    {
+        return array(
+            "OST id" => $this->id,
+            "OST name" => $this->name,
+            "video game name" => $this->videoGameName,
+            "release year" => $this->releaseYear,
+            "tracklist" => $this->trackList
+        );
+    }
+
 }
